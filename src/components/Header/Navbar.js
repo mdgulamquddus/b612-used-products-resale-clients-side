@@ -1,7 +1,16 @@
-import React from "react";
-import { Link, NavLink } from "react-router-dom";
+import React, { useContext } from "react";
+import { Link, NavLink, useNavigate } from "react-router-dom";
+import { AuthContext } from "../../context/AuthProvider";
 
 const Navbar = () => {
+  const { user, logout } = useContext(AuthContext);
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    logout().then(() => {
+      navigate("/");
+    });
+  };
   const menuItems = (
     <>
       <NavLink className="btn btn-ghost" to="/">
@@ -13,9 +22,17 @@ const Navbar = () => {
       <NavLink className="btn btn-ghost" to="/wishlist">
         WishList
       </NavLink>
-      <NavLink className="btn btn-ghost" to="/login">
-        Login
-      </NavLink>
+      {user && user.uid ? (
+        <>
+          <NavLink onClick={handleLogout} className="btn btn-ghost" to="/">
+            Log Out
+          </NavLink>
+        </>
+      ) : (
+        <NavLink className="btn btn-ghost" to="/login">
+          Login
+        </NavLink>
+      )}
     </>
   );
   return (

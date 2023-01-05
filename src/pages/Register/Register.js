@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { toast } from "react-hot-toast";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/AuthProvider";
 
 const Register = () => {
@@ -11,10 +11,10 @@ const Register = () => {
     setLoading,
     signInWithGoogle,
   } = useContext(AuthContext);
-  // const navigate = useNavigate();
-  // const location = useLocation();
+  const navigate = useNavigate();
+  const location = useLocation();
 
-  // const from = location.state?.from?.pathname || "/";
+  const from = location.state?.from?.pathname || "/";
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -24,45 +24,45 @@ const Register = () => {
     const password = event.target.password.value;
     const opt = event.target.opt.value;
 
-    // const fromData = new FormData();
-    // fromData.append("image", image);
+    const fromData = new FormData();
+    fromData.append("image", image);
 
-    // const url = `https://api.imgbb.com/1/upload?key=a55166fc24033e932eef7e36a59a548c`;
-    // fetch(url, {
-    //   method: "POST",
-    //   body: fromData,
-    // })
-    //   .then((res) => res.json())
-    //   .then((data) => {
-    //     createUser(email, password)
-    //       .then((result) => {
-    //         console.log(result.user.email);
-    //         // setAuthToken(result.user);
-    //         // navigate(from, { replace: true });
-    //         updateUserProfile(name, data.data.display_url)
-    //           .then(() => {
-    //             toast.success("User Created Successfully");
-    //           })
-    //           .catch((err) => console.log(err));
-    //       })
-    //       .catch((err) => console.log(err));
-    //   })
-    //   .catch((err) => console.log(err));
+    const url = `https://api.imgbb.com/1/upload?key=${process.env.REACT_APP_imgbb_api}`;
+    fetch(url, {
+      method: "POST",
+      body: fromData,
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        createUser(email, password)
+          .then((result) => {
+            console.log(result.user.email);
+            // setAuthToken(result.user);
+            navigate(from, { replace: true });
+            updateUserProfile(name, data.data.display_url)
+              .then(() => {
+                toast.success("User Created Successfully");
+              })
+              .catch((err) => console.log(err));
+          })
+          .catch((err) => console.log(err));
+      })
+      .catch((err) => console.log(err));
     console.log(name, email, image, password, opt);
   };
-  // const handleSinginWithGoogle = () => {
-  //   signInWithGoogle()
-  //     .then((result) => {
-  //       toast.success("User Login Successfully");
-  //       setAuthToken(result.user);
-  //       navigate(from, { replace: true });
-  //     })
-  //     .catch((err) => {
-  //       toast.error(err.message);
-  //       console.log(err);
-  //       setLoading(false);
-  //     });
-  // };
+  const handleSinginWithGoogle = () => {
+    signInWithGoogle()
+      .then((result) => {
+        toast.success("User Login Successfully");
+        // setAuthToken(result.user);
+        navigate(from, { replace: true });
+      })
+      .catch((err) => {
+        toast.error(err.message);
+        console.log(err);
+        setLoading(false);
+      });
+  };
   return (
     <div className="flex justify-center items-center pt-8">
       <div className="flex flex-col max-w-md p-6 rounded-md sm:p-10 bg-gray-100 text-gray-900">
@@ -167,7 +167,11 @@ const Register = () => {
           <div className="flex-1 h-px sm:w-16 dark:bg-gray-700"></div>
         </div>
         <div className="flex justify-center space-x-4">
-          <button aria-label="Log in with Google" className="p-3 rounded-sm">
+          <button
+            onClick={handleSinginWithGoogle}
+            aria-label="Log in with Google"
+            className="p-3 rounded-sm"
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 32 32"

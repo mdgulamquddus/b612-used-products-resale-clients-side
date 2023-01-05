@@ -1,65 +1,54 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { toast } from "react-hot-toast";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/AuthProvider";
 
 const Login = () => {
-  // const [userEmail, setUserEmail] = useState("");
-  // const { signin, signInWithGoogle, loading, setLoading, resetPassword } =
-  //   useContext(AuthContext);
-  // const navigate = useNavigate();
-  // const location = useLocation();
+  const [userEmail, setUserEmail] = useState("");
+  const { signin, signInWithGoogle, loading, setLoading, resetPassword } =
+    useContext(AuthContext);
+  const navigate = useNavigate();
+  const location = useLocation();
 
-  // const from = location.state?.from?.pathname || "/";
-  // const handleSubmit = (event) => {
-  //   event.preventDefault();
-  //   const email = event.target.email.value;
-  //   const password = event.target.password.value;
-  //   signin(email, password)
-  //     .then((result) => {
-  //       toast.success("User Login Successfully");
-  //       setAuthToken(result.user);
-  //       navigate(from, { replace: true });
-  //     })
-  //     .catch((err) => {
-  //       toast.error(err.message);
-  //       console.log(err);
-  //       setLoading(false);
-  //     });
-  // };
-  // const handleSinginWithGoogle = () => {
-  //   signInWithGoogle()
-  //     .then((result) => {
-  //       toast.success("User Login Successfully");
-  //       setAuthToken(result.user);
-  //       navigate(from, { replace: true });
-  //     })
-  //     .catch((err) => {
-  //       toast.error(err.message);
-  //       console.log(err);
-  //       setLoading(false);
-  //     });
-  // };
-
-  // const handleResetPassword = () => {
-  //   resetPassword(userEmail)
-  //     .then(() => toast.success("Please Check Your Email For Reset Link"))
-  //     .catch((err) => {
-  //       toast.error(err.message);
-  //       console.log(err);
-  //       setLoading(false);
-  //     });
-  // };
-
-  const { signInWithGoogle } = useContext(AuthContext);
-
+  const from = location.state?.from?.pathname || "/";
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const email = event.target.email.value;
+    const password = event.target.password.value;
+    signin(email, password)
+      .then((result) => {
+        toast.success("User Login Successfully");
+        // setAuthToken(result.user);
+        navigate(from, { replace: true });
+      })
+      .catch((err) => {
+        toast.error(err.message);
+        console.log(err);
+        setLoading(false);
+      });
+  };
   const handleSinginWithGoogle = () => {
     signInWithGoogle()
       .then((result) => {
         toast.success("User Login Successfully");
-        console.log(result.user);
+        // setAuthToken(result.user);
+        navigate(from, { replace: true });
       })
-      .catch((err) => toast.error(err.message));
+      .catch((err) => {
+        toast.error(err.message);
+        console.log(err);
+        setLoading(false);
+      });
+  };
+
+  const handleResetPassword = () => {
+    resetPassword(userEmail)
+      .then(() => toast.success("Please Check Your Email For Reset Link"))
+      .catch((err) => {
+        toast.error(err.message);
+        console.log(err);
+        setLoading(false);
+      });
   };
 
   return (
@@ -72,6 +61,7 @@ const Login = () => {
           </p>
         </div>
         <form
+          onSubmit={handleSubmit}
           noValidate=""
           action=""
           className="space-y-6 ng-untouched ng-pristine ng-valid"
@@ -82,6 +72,7 @@ const Login = () => {
                 Email address
               </label>
               <input
+                onBlur={(event) => setUserEmail(event.target.value)}
                 type="email"
                 name="email"
                 id="email"
@@ -118,7 +109,10 @@ const Login = () => {
           </div>
         </form>
         <div className="space-y-1">
-          <button className="text-xs hover:underline text-gray-400">
+          <button
+            onClick={handleResetPassword}
+            className="text-xs hover:underline text-gray-400"
+          >
             Forgot password?
           </button>
         </div>

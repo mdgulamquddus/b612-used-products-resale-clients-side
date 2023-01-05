@@ -5,6 +5,7 @@ import MainLayout from "../layouts/MainLayout";
 import AllProducts from "../pages/Dashboard/Admin/AllProducts";
 import AllReport from "../pages/Dashboard/Admin/AllReport";
 import AllUsers from "../pages/Dashboard/Admin/AllUsers";
+import AddProduct from "../pages/Dashboard/Seller/AddProduct";
 import WishList from "../pages/Dashboard/WishList";
 import Login from "../pages/Login/Login";
 import Register from "../pages/Register/Register";
@@ -52,6 +53,10 @@ const router = createBrowserRouter([
       {
         path: "all-report",
         element: <AllReport />,
+      },
+      {
+        path: "add-product",
+        element: <AddProduct />,
       },
     ],
   },

@@ -1,4 +1,7 @@
+import { useContext } from "react";
+import { toast } from "react-hot-toast";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../../context/AuthProvider";
 
 const Login = () => {
   // const [userEmail, setUserEmail] = useState("");
@@ -48,6 +51,17 @@ const Login = () => {
   //     });
   // };
 
+  const { signInWithGoogle } = useContext(AuthContext);
+
+  const handleSinginWithGoogle = () => {
+    signInWithGoogle()
+      .then((result) => {
+        toast.success("User Login Successfully");
+        console.log(result.user);
+      })
+      .catch((err) => toast.error(err.message));
+  };
+
   return (
     <div className="flex justify-center items-center pt-8">
       <div className="flex flex-col max-w-md p-6 rounded-md sm:p-10 bg-gray-100 text-gray-900">
@@ -73,7 +87,7 @@ const Login = () => {
                 id="email"
                 required
                 placeholder="Enter Your Email Here"
-                className="w-full px-3 py-2 border rounded-md border-gray-300 focus:outline-green-500 bg-gray-200 text-gray-900"
+                className="w-full px-3 py-2 border rounded-md border-gray-300 focus:outline-yellow-500 bg-gray-200 text-gray-900"
                 data-temp-mail-org="0"
               />
             </div>
@@ -89,7 +103,7 @@ const Login = () => {
                 id="password"
                 required
                 placeholder="*******"
-                className="w-full px-3 py-2 border rounded-md border-gray-300 focus:outline-green-500 bg-gray-200 text-gray-900"
+                className="w-full px-3 py-2 border rounded-md border-gray-300 focus:outline-yellow-500 bg-gray-200 text-gray-900"
               />
             </div>
           </div>
@@ -97,7 +111,7 @@ const Login = () => {
           <div>
             <button
               type="submit"
-              classes="w-full px-8 py-3 font-semibold rounded-md bg-gray-900 hover:bg-gray-700 hover:text-white text-gray-100"
+              className="w-full px-8 py-3 font-semibold rounded-md bg-warning hover:bg-yellow-600 hover:text-white text-gray-100"
             >
               Sign in
             </button>
@@ -116,7 +130,11 @@ const Login = () => {
           <div className="flex-1 h-px sm:w-16 dark:bg-gray-700"></div>
         </div>
         <div className="flex justify-center space-x-4">
-          <button aria-label="Log in with Google" className="p-3 rounded-sm">
+          <button
+            onClick={handleSinginWithGoogle}
+            aria-label="Log in with Google"
+            className="p-3 rounded-sm"
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 32 32"

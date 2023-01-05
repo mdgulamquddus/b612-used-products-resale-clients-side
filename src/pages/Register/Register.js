@@ -1,59 +1,55 @@
-import React from "react";
+import React, { useContext } from "react";
+import { toast } from "react-hot-toast";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../../context/AuthProvider";
 
 const Register = () => {
-  // const {
-  //   createUser,
-  //   updateUserProfile,
-  //   verifyEmail,
-  //   loading,
-  //   setLoading,
-  //   signInWithGoogle,
-  // } = useContext(AuthContext);
+  const {
+    createUser,
+    updateUserProfile,
+    loading,
+    setLoading,
+    signInWithGoogle,
+  } = useContext(AuthContext);
   // const navigate = useNavigate();
   // const location = useLocation();
 
   // const from = location.state?.from?.pathname || "/";
 
-  // const handleSubmit = (event) => {
-  //   event.preventDefault();
-  //   const name = event.target.name.value;
-  //   const email = event.target.email.value;
-  //   const image = event.target.image.files[0];
-  //   const password = event.target.password.value;
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const name = event.target.name.value;
+    const email = event.target.email.value;
+    const image = event.target.image.files[0];
+    const password = event.target.password.value;
+    const opt = event.target.opt.value;
 
-  //   const fromData = new FormData();
-  //   fromData.append("image", image);
+    // const fromData = new FormData();
+    // fromData.append("image", image);
 
-  //   const url = `https://api.imgbb.com/1/upload?key=a55166fc24033e932eef7e36a59a548c`;
-  //   fetch(url, {
-  //     method: "POST",
-  //     body: fromData,
-  //   })
-  //     .then((res) => res.json())
-  //     .then((data) => {
-  //       createUser(email, password)
-  //         .then((result) => {
-  //           console.log(result.user.email);
-  //           setAuthToken(result.user);
-  //           navigate(from, { replace: true });
-  //           updateUserProfile(name, data.data.display_url)
-  //             .then(() => {
-  //               verifyEmail()
-  //                 .then(() => {
-  //                   toast.success(
-  //                     "Please Verify Your Email, Link Sent To Your Email"
-  //                   );
-  //                 })
-  //                 .catch((err) => console.log(err));
-  //             })
-  //             .catch((err) => console.log(err));
-  //         })
-  //         .catch((err) => console.log(err));
-  //     })
-  //     .catch((err) => console.log(err));
-  //   // console.log(name, email, image, password);
-  // };
+    // const url = `https://api.imgbb.com/1/upload?key=a55166fc24033e932eef7e36a59a548c`;
+    // fetch(url, {
+    //   method: "POST",
+    //   body: fromData,
+    // })
+    //   .then((res) => res.json())
+    //   .then((data) => {
+    //     createUser(email, password)
+    //       .then((result) => {
+    //         console.log(result.user.email);
+    //         // setAuthToken(result.user);
+    //         // navigate(from, { replace: true });
+    //         updateUserProfile(name, data.data.display_url)
+    //           .then(() => {
+    //             toast.success("User Created Successfully");
+    //           })
+    //           .catch((err) => console.log(err));
+    //       })
+    //       .catch((err) => console.log(err));
+    //   })
+    //   .catch((err) => console.log(err));
+    console.log(name, email, image, password, opt);
+  };
   // const handleSinginWithGoogle = () => {
   //   signInWithGoogle()
   //     .then((result) => {
@@ -75,6 +71,7 @@ const Register = () => {
           <p className="text-sm text-gray-400">Create a new account</p>
         </div>
         <form
+          onSubmit={handleSubmit}
           noValidate=""
           action=""
           className="space-y-12 ng-untouched ng-pristine ng-valid"
@@ -90,7 +87,7 @@ const Register = () => {
                 id="name"
                 required
                 placeholder="Enter Your Name Here"
-                className="w-full px-3 py-2 border rounded-md border-gray-300 focus:outline-green-500 bg-gray-200 text-gray-900"
+                className="w-full px-3 py-2 border rounded-md border-gray-300 focus:outline-yellow-500 bg-gray-200 text-gray-900"
                 data-temp-mail-org="0"
               />
             </div>
@@ -107,6 +104,21 @@ const Register = () => {
               />
             </div>
             <div>
+              <label htmlFor="select" className="block mb-2 text-sm">
+                Select Buyer Or Seller:
+              </label>
+              <select
+                required
+                name="opt"
+                id=""
+                className="select select-bordered border-warning w-full max-w-xs focus:outline-yellow-500"
+              >
+                <option>Buyer</option>
+                <option>Seller</option>
+              </select>
+            </div>
+
+            <div>
               <label htmlFor="email" className="block mb-2 text-sm">
                 Email address
               </label>
@@ -116,7 +128,7 @@ const Register = () => {
                 name="email"
                 id="email"
                 placeholder="Enter Your Email Here"
-                className="w-full px-3 py-2 border rounded-md border-gray-300 focus:outline-green-500 bg-gray-200 text-gray-900"
+                className="w-full px-3 py-2 border rounded-md border-gray-300 focus:outline-yellow-500 bg-gray-200 text-gray-900"
                 data-temp-mail-org="0"
               />
             </div>
@@ -132,7 +144,7 @@ const Register = () => {
                 id="password"
                 required
                 placeholder="*******"
-                className="w-full px-3 py-2 border rounded-md border-gray-300 bg-gray-200 focus:outline-green-500 text-gray-900"
+                className="w-full px-3 py-2 border rounded-md border-gray-300 bg-gray-200 focus:outline-yellow-500 text-gray-900"
               />
             </div>
           </div>
@@ -140,7 +152,7 @@ const Register = () => {
             <div>
               <button
                 type="submit"
-                classes="w-full px-8 py-3 font-semibold rounded-md bg-gray-900 hover:bg-gray-700 hover:text-white text-gray-100"
+                className="w-full px-8 py-3 font-semibold rounded-md bg-warning hover:bg-yellow-600 hover:text-white text-gray-100"
               >
                 Sign up
               </button>

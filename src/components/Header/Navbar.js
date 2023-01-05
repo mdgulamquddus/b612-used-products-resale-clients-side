@@ -13,6 +13,9 @@ const Navbar = () => {
       <NavLink className="btn btn-ghost" to="/wishlist">
         WishList
       </NavLink>
+      <NavLink className="btn btn-ghost" to="/login">
+        Login
+      </NavLink>
     </>
   );
   return (

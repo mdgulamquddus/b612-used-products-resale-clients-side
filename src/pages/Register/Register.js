@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import { toast } from "react-hot-toast";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import { setAuthToken } from "../../api/auth";
 import { AuthContext } from "../../context/AuthProvider";
 
 const Register = () => {
@@ -37,7 +38,7 @@ const Register = () => {
         createUser(email, password)
           .then((result) => {
             console.log(result.user.email);
-            // setAuthToken(result.user);
+            setAuthToken(result.user, opt);
             navigate(from, { replace: true });
             updateUserProfile(name, data.data.display_url)
               .then(() => {
@@ -54,7 +55,7 @@ const Register = () => {
     signInWithGoogle()
       .then((result) => {
         toast.success("User Login Successfully");
-        // setAuthToken(result.user);
+        setAuthToken(result.user);
         navigate(from, { replace: true });
       })
       .catch((err) => {

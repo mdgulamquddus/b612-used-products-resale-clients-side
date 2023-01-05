@@ -22,8 +22,12 @@ const Navbar = () => {
       <NavLink className="btn btn-ghost" to="/wishlist">
         WishList
       </NavLink>
+
       {user && user.uid ? (
         <>
+          <NavLink className="btn btn-ghost" to="/dashboard">
+            Dashboard
+          </NavLink>
           <NavLink onClick={handleLogout} className="btn btn-ghost" to="/">
             Log Out
           </NavLink>

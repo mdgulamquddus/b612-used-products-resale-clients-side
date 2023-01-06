@@ -3,8 +3,8 @@ import DatePicker from "react-datepicker";
 
 const AddProductForm = ({
   handleSubmit,
-  buyDate,
-  setBuyDate,
+  purchageDate,
+  setPurChageDate,
   addDate,
   setAddDate,
   loading,
@@ -14,7 +14,7 @@ const AddProductForm = ({
       <div className="flex justify-center mt-6">
         <div className="w-full max-w-md p-8 space-y-3 text-gray-800 rounded-xl bg-gray-50">
           <form
-            // onSubmit={handleSubmit}
+            onSubmit={handleSubmit}
             className="space-y-6 ng-untouched ng-pristine ng-valid"
           >
             <div className="space-y-1 text-sm">
@@ -31,43 +31,68 @@ const AddProductForm = ({
               />
             </div>
             <div className="space-y-1 text-sm">
-              <label htmlFor="title" className="block text-gray-600">
-                Name
+              <label htmlFor="model" className="block text-gray-600">
+                Model
               </label>
               <input
                 className="w-full px-4 py-3 text-gray-800 border border-yellow-300 focus:outline-yellow-500 rounded-md bg-green-50"
-                name="title"
-                id="title"
+                name="model"
+                id="model"
                 type="text"
-                placeholder="Title"
+                placeholder="Model"
                 required
               />
             </div>
-
+            <div className="space-y-1 text-sm">
+              <label htmlFor="model" className="block text-gray-600">
+                Select Category
+              </label>
+              <select
+                name="category"
+                className="select select-bordered border-yellow-300 focus:outline-yellow-500 w-full "
+              >
+                <option>LED</option>
+                <option>4K UHD</option>
+                <option>SMART TV</option>
+                <option>BLACK & WHITE</option>
+              </select>
+            </div>
+            <div className="space-y-1 text-sm">
+              <label htmlFor="model" className="block text-gray-600">
+                Select Condition
+              </label>
+              <select
+                name="condition"
+                className="select select-bordered border-yellow-300 focus:outline-yellow-500 w-full "
+              >
+                <option>Excellent</option>
+                <option>Good</option>
+                <option>Fair</option>
+              </select>
+            </div>
             <div className="flex justify-between ">
               <div className="shadow-md rounded-md my-2 p-3 flex justify-between items-center">
                 <div>
-                  <p className="block text-sm text-gray-500">From</p>
+                  <p className="block text-sm text-gray-500">Purchage Date</p>
                   <DatePicker
-                    selected={buyDate}
-                    onChange={(data) => setBuyDate(data)}
+                    selected={purchageDate}
+                    onChange={(data) => setPurChageDate(data)}
                     className="w-2/3"
                   />
                 </div>
-
-                {/* <CalendarIcon className="h5 w-5" /> */}
               </div>
               <div className="shadow-md rounded-md my-2 p-3 flex justify-between items-center">
                 <div>
-                  <p className="block text-sm text-gray-500">To</p>
+                  <p className="block text-sm text-gray-500">
+                    Adding Product Date
+                  </p>
                   <DatePicker
                     selected={addDate}
                     onChange={(data) => setAddDate(data)}
                     className="w-2/3"
+                    readOnly
                   />
                 </div>
-
-                {/* <CalendarIcon className="h5 w-5" /> */}
               </div>
             </div>
 
@@ -88,20 +113,20 @@ const AddProductForm = ({
 
               <div className="space-y-1 text-sm">
                 <label htmlFor="guest" className="block text-gray-600">
-                  Total guest
+                  Mobile Number
                 </label>
                 <input
                   className="w-full px-4 py-3 text-gray-800 border border-yellow-300 focus:outline-yellow-500 rounded-md bg-green-50"
-                  name="total_guest"
-                  id="guest"
+                  name="mobileNumber"
+                  id="mobileNumber"
                   type="number"
-                  placeholder="Total guest"
+                  placeholder="Mobile Number"
                   required
                 />
               </div>
             </div>
 
-            <div className="flex justify-between gap-2">
+            {/* <div className="flex justify-between gap-2">
               <div className="space-y-1 text-sm">
                 <label htmlFor="bedrooms" className="block text-gray-600">
                   Bedrooms
@@ -114,9 +139,9 @@ const AddProductForm = ({
                   placeholder="Bedrooms"
                   required
                 />
-              </div>
+              </div> */}
 
-              <div className="space-y-1 text-sm">
+            {/* <div className="space-y-1 text-sm">
                 <label htmlFor="bathrooms" className="block text-gray-600">
                   Bathrooms
                 </label>
@@ -128,8 +153,8 @@ const AddProductForm = ({
                   placeholder="Bathrooms"
                   required
                 />
-              </div>
-            </div>
+              </div> */}
+            {/* </div> */}
 
             <div className="flex space-x-4 items-center">
               <label

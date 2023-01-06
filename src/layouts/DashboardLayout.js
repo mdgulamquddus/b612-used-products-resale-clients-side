@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { Link, Outlet } from "react-router-dom";
 import { getRole } from "../api/users";
 import Navbar from "../components/Header/Navbar";
+import Spinner from "../components/Spinner/Spinner";
 import { AuthContext } from "../context/AuthProvider";
 
 const DashboardLayout = () => {
@@ -9,6 +10,7 @@ const DashboardLayout = () => {
   const [role, setRole] = useState(null);
   console.log(role);
   const [loading, setLoading] = useState(true);
+
   useEffect(() => {
     setLoading(true);
     getRole(user?.email).then((data) => {
@@ -16,6 +18,9 @@ const DashboardLayout = () => {
       setLoading(false);
     });
   }, [user]);
+  if (loading) {
+    return <Spinner />;
+  }
   return (
     <div>
       <Navbar></Navbar>
@@ -41,7 +46,7 @@ const DashboardLayout = () => {
               )}
               {role === "Seller" && (
                 <>
-                  <Link to="all-products-seller">All Products</Link>
+                  <Link to="my-products">My Products</Link>
                   <Link to="add-product">Add Product</Link>
                 </>
               )}

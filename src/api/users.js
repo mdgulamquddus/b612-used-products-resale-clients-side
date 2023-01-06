@@ -27,3 +27,16 @@ export const getAllUsers = async () => {
 
   return users;
 };
+
+// Delete a user
+export const deleteUser = async (id) => {
+  const response = await fetch(`${process.env.REACT_APP_API_URL}/users/${id}`, {
+    method: "DELETE",
+    headers: {
+      "content-type": "application/json",
+      //   authorization: `Bearer ${localStorage.getItem("aircnc-token")}`,
+    },
+  });
+  const result = await response.json();
+  return result;
+};

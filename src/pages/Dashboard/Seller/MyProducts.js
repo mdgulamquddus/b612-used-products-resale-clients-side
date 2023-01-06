@@ -1,11 +1,14 @@
 import { useQuery } from "@tanstack/react-query";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { toast } from "react-hot-toast";
 import { deleteProduct } from "../../../api/products";
 import DeleteModal from "../../../components/Modal/DeleteModal";
 import Spinner from "../../../components/Spinner/Spinner";
+import { AuthContext } from "../../../context/AuthProvider";
 
-const AllProducts = () => {
+const MyProducts = () => {
+  const { user } = useContext(AuthContext);
+  console.log(user.email);
   let [isOpen, setIsOpen] = useState(false);
   const {
     data: products = [],
@@ -14,10 +17,14 @@ const AllProducts = () => {
   } = useQuery({
     queryKey: ["products"],
     queryFn: () =>
-      fetch(`${process.env.REACT_APP_API_URL}/products`).then((res) =>
-        res.json()
-      ),
+      fetch(
+        `${process.env.REACT_APP_API_URL}/products/seller/${user?.email}`
+      ).then((res) => res.json()),
   });
+  if (isLoading) {
+    <Spinner />;
+  }
+
   function openModal() {
     setIsOpen(true);
   }
@@ -36,22 +43,33 @@ const AllProducts = () => {
       .catch((err) => console.log(err));
     closeModal();
   };
-  if (isLoading) {
-    <Spinner />;
-  }
-  console.log(products[0].status);
+  const handleAdvertise = (id) => {
+    console.log(id);
+    fetch(`${process.env.REACT_APP_API_URL}/products/advertise/${id}`, {
+      method: "PUT",
+      // headers: {
+      //   authorization: `bearer ${localStorage.getItem("accessToken")}`,
+      // },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        if (data.modifiedCount) {
+          toast.success("Product For Advertise Requseted Successfully");
+          refetch();
+        }
+      });
+  };
+  console.log(products);
   return (
     <div className="overflow-x-auto w-full">
       <table className="table w-full">
         <thead>
           <tr>
             <th>Display</th>
-            <th>Email</th>
-            <th>Condition</th>
+            <th>Model</th>
             <th>Status</th>
-            <th>Add Date</th>
-            <th>Purchage Year</th>
-            <th>Price</th>
+            <th></th>
             <th></th>
           </tr>
         </thead>
@@ -61,32 +79,30 @@ const AllProducts = () => {
               <td>
                 <div className="flex items-center space-x-3">
                   <div className="avatar">
-                    <div className="mask mask-squircle w-12 h-12">
+                    <div className="mask  w-40 h-28">
                       <img
                         src={product.image}
                         alt="Avatar Tailwind CSS Component"
                       />
                     </div>
                   </div>
-                  <div>
-                    <div className="font-bold">{product.seller.name}</div>
-                    <div className="text-sm opacity-50">{product.location}</div>
-                  </div>
                 </div>
               </td>
               <td>
-                {product.seller.email}
-                <br />
-                <span className="badge badge-ghost badge-sm">
-                  {product.mobileNumber}
-                </span>
+                <div>
+                  <div className="font-bold">{product.model}</div>
+                </div>
               </td>
-              <td>{product.condition}</td>
               <td>{product.status}</td>
-              <td>{product.addDateProduct}</td>
-              <td>{product.purchageDateProduct}</td>
-              <td>{product.price}</td>
 
+              <td>
+                <button
+                  onClick={() => handleAdvertise(product._id)}
+                  className="btn btn-success btn-xs rounded"
+                >
+                  Advertise
+                </button>
+              </td>
               <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                 <span
                   onClick={openModal}
@@ -113,4 +129,4 @@ const AllProducts = () => {
   );
 };
 
-export default AllProducts;
+export default MyProducts;

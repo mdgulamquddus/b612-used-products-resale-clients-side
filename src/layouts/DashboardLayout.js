@@ -52,7 +52,7 @@ const DashboardLayout = () => {
               )}
               {role === "Buyer" && (
                 <>
-                  <Link to="my-products">My Products</Link>
+                  <Link to="buyer-all-product">My Products</Link>
                 </>
               )}
             </li>

@@ -68,7 +68,7 @@ export const deleteWishList = async (id) => {
 // Add a booking Product
 export const bookingProduct = async (productData) => {
   const response = await fetch(
-    `${process.env.REACT_APP_API_URL}/products/wishlist`,
+    `${process.env.REACT_APP_API_URL}/product/booking`,
     {
       method: "POST",
       headers: {
@@ -81,4 +81,21 @@ export const bookingProduct = async (productData) => {
 
   const data = await response.json();
   return data;
+};
+
+// Delete a Product in wish List
+export const deleteBookProduct = async (id) => {
+  console.log(id);
+  const response = await fetch(
+    `${process.env.REACT_APP_API_URL}/product/booking/${id}`,
+    {
+      method: "DELETE",
+      headers: {
+        "content-type": "application/json",
+        //   authorization: `Bearer ${localStorage.getItem("aircnc-token")}`,
+      },
+    }
+  );
+  const result = await response.json();
+  return result;
 };

@@ -4,7 +4,7 @@ import { Link, useParams } from "react-router-dom";
 import axios from "axios";
 import blueTick from "../../assets/check.png";
 import { AuthContext } from "../../context/AuthProvider";
-import { addWishList } from "../../api/products";
+import { addWishList, bookingProduct } from "../../api/products";
 import { toast } from "react-hot-toast";
 const AllCategoriesItem = () => {
   const { user } = useContext(AuthContext);
@@ -40,8 +40,17 @@ const AllCategoriesItem = () => {
       .catch((err) => console.log(err));
   };
 
-  const handleBooking = (id) => {
-    console.log(id);
+  const handleBooking = (product) => {
+    const bookData = {
+      bookProduct: product,
+      userEmail: user?.email,
+    };
+    bookingProduct(bookData)
+      .then((res) => {
+        toast.success("Product Booking Successfully");
+      })
+      .catch((err) => console.log(err));
+    console.log(bookData);
   };
 
   console.log(products);
@@ -81,7 +90,7 @@ const AllCategoriesItem = () => {
                 <div className="card-actions justify-between">
                   <div>
                     <button
-                      onClick={() => handleBooking(product._id)}
+                      onClick={() => handleBooking(product)}
                       className="btn btn-outline btn-warning btn-sm"
                     >
                       Add Product

@@ -7,6 +7,7 @@ import MainLayout from "../layouts/MainLayout";
 import AllProducts from "../pages/Dashboard/Admin/AllProducts";
 import AllReport from "../pages/Dashboard/Admin/AllReport";
 import AllUsers from "../pages/Dashboard/Admin/AllUsers";
+import BuyerAllProduct from "../pages/Dashboard/Buyer/BuyerAllProduct";
 import WishList from "../pages/Dashboard/Buyer/WishList";
 import Checkout from "../pages/Dashboard/Checkout/Checkout";
 import AddProduct from "../pages/Dashboard/Seller/AddProduct";
@@ -41,6 +42,7 @@ const router = createBrowserRouter([
         path: "/product-details/:id",
         element: <ProductDetails></ProductDetails>,
       },
+
       {
         path: "/wishlist",
         element: (
@@ -76,11 +78,15 @@ const router = createBrowserRouter([
         element: <AddProduct />,
       },
       {
+        path: "buyer-all-product",
+        element: <BuyerAllProduct></BuyerAllProduct>,
+      },
+      {
         path: "my-products",
         element: <MyProducts />,
       },
       {
-        path: "checkout",
+        path: "checkout/:id",
         element: <Checkout />,
       },
     ],

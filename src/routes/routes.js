@@ -1,14 +1,16 @@
 import { createBrowserRouter } from "react-router-dom";
 import AllCategoriesItem from "../components/Category.js/AllCategoriesItem";
+import ProductDetails from "../components/Category.js/ProductDetails";
 import Welcome from "../components/Dashboard/Welcome";
 import DashboardLayout from "../layouts/DashboardLayout";
 import MainLayout from "../layouts/MainLayout";
 import AllProducts from "../pages/Dashboard/Admin/AllProducts";
 import AllReport from "../pages/Dashboard/Admin/AllReport";
 import AllUsers from "../pages/Dashboard/Admin/AllUsers";
+import WishList from "../pages/Dashboard/Buyer/WishList";
+import Checkout from "../pages/Dashboard/Checkout/Checkout";
 import AddProduct from "../pages/Dashboard/Seller/AddProduct";
 import MyProducts from "../pages/Dashboard/Seller/MyProducts";
-import WishList from "../pages/Dashboard/WishList";
 import Home from "../pages/Home/Home";
 import Login from "../pages/Login/Login";
 import Register from "../pages/Register/Register";
@@ -34,6 +36,10 @@ const router = createBrowserRouter([
       {
         path: "/register",
         element: <Register></Register>,
+      },
+      {
+        path: "/product-details/:id",
+        element: <ProductDetails></ProductDetails>,
       },
       {
         path: "/wishlist",
@@ -72,6 +78,10 @@ const router = createBrowserRouter([
       {
         path: "my-products",
         element: <MyProducts />,
+      },
+      {
+        path: "checkout",
+        element: <Checkout />,
       },
     ],
   },

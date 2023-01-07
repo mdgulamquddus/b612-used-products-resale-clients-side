@@ -1,16 +1,23 @@
 import { useQuery } from "@tanstack/react-query";
-import React, { useState } from "react";
-import { useParams } from "react-router-dom";
+import React, { useContext, useState } from "react";
+import { Link, useParams } from "react-router-dom";
 import axios from "axios";
-
+import blueTick from "../../assets/check.png";
+import { AuthContext } from "../../context/AuthProvider";
+import { addWishList } from "../../api/products";
+import { toast } from "react-hot-toast";
 const AllCategoriesItem = () => {
+  const { user } = useContext(AuthContext);
   const [verified, setVerified] = useState("");
   const handleVerifySeller = (email) => {
     console.log(email);
-    axios.get(`${process.env.REACT_APP_API_URL}/user/${email}`).then((res) => {
-      console.log(res.data.status);
-      setVerified(res.data.status);
-    });
+    axios
+      .get(`${process.env.REACT_APP_API_URL}/user/${email}`)
+      .then((res) => {
+        console.log(res.data.status);
+        setVerified(res.data.status);
+      })
+      .catch((err) => console.log(err));
   };
   const { category } = useParams();
   const { data: products = [] } = useQuery({
@@ -20,6 +27,22 @@ const AllCategoriesItem = () => {
         (res) => res.json()
       ),
   });
+
+  const handleWishList = (product) => {
+    const productData = {
+      product: product,
+      userEmail: user?.email,
+    };
+    addWishList(productData)
+      .then((res) => {
+        toast.success("Product Added in Wish List");
+      })
+      .catch((err) => console.log(err));
+  };
+
+  const handleBooking = (id) => {
+    console.log(id);
+  };
 
   console.log(products);
   console.log(verified);
@@ -31,25 +54,47 @@ const AllCategoriesItem = () => {
           products.map((product) => (
             <div key={product._id} className="card w-96 bg-base-100 shadow-xl">
               <figure>
-                <img src={product.image} alt="Shoes" />
+                <img className="h-48 w-full" src={product.image} alt="Shoes" />
               </figure>
               <div className="card-body">
                 <h2 className="card-title">{product.model}</h2>
-                <div className="flex">
-                  <p>seller :{product.seller.name} </p>
-                  <div
-                    onChange={handleVerifySeller(product.seller.email)}
-                    className="badge badge-primary"
-                  >
-                    {/* {product.seller?.status
-                      ? product.seller?.status
-                      : "unvierfied"} */}
-                    {verified === "verified" ? verified : "unvierfied"}
+                <div className="flex items-center">
+                  <p>seller: {product.seller.name} </p>
+                  <div onChange={handleVerifySeller(product.seller.email)}>
+                    {verified === "verified" ? (
+                      <div>
+                        <img className="w-4 h-4" src={blueTick} alt="" />
+                      </div>
+                    ) : (
+                      "unvierfied"
+                    )}
                   </div>
                 </div>
-                <div className="card-actions justify-end">
-                  <div className="badge badge-outline">Fashion</div>
-                  <div className="badge badge-outline">Products</div>
+                <div className="cardt-actions my-3">
+                  <Link
+                    to={`/product-details/${product._id}`}
+                    className="btn btn-primary btn-xs btn-outline"
+                  >
+                    Details Product
+                  </Link>
+                </div>
+                <div className="card-actions justify-between">
+                  <div>
+                    <button
+                      onClick={() => handleBooking(product._id)}
+                      className="btn btn-outline btn-warning btn-sm"
+                    >
+                      Add Product
+                    </button>
+                  </div>
+                  <div className="card-actions">
+                    <div
+                      onClick={() => handleWishList(product)}
+                      className="btn btn-sm btn-outline btn-accent"
+                    >
+                      Add to Wish List
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>

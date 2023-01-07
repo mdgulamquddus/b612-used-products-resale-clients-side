@@ -1,14 +1,18 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
+import { toast } from "react-hot-toast";
 import { Link, useParams } from "react-router-dom";
+import { bookingProduct } from "../../api/products";
 import blueTick from "../../assets/check.png";
+import { AuthContext } from "../../context/AuthProvider";
 import Spinner from "../Spinner/Spinner";
 
 const ProductDetails = () => {
   const productId = useParams();
   console.log(productId);
   const [verified, setVerified] = useState("");
+  const { user } = useContext(AuthContext);
 
   const { data: product = [], isLoading } = useQuery({
     queryKey: ["product"],
@@ -32,6 +36,18 @@ const ProductDetails = () => {
   if (isLoading) {
     return <Spinner />;
   }
+  const handleBooking = (product) => {
+    const bookData = {
+      bookProduct: product,
+      userEmail: user?.email,
+    };
+    bookingProduct(bookData)
+      .then((res) => {
+        toast.success("Product Booking Successfully");
+      })
+      .catch((err) => console.log(err));
+    console.log(bookData);
+  };
   //   console.log(product);
   return (
     <div>
@@ -120,7 +136,10 @@ const ProductDetails = () => {
             </Link>
           </div>
           <div className="mt-6 mb-2">
-            <button className="btn btn-warning btn-outline btn-xs">
+            <button
+              onClick={() => handleBooking(product)}
+              className="btn btn-outline btn-warning btn-sm"
+            >
               Add Product
             </button>
           </div>

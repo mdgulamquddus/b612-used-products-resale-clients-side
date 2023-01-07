@@ -72,51 +72,55 @@ const AllUsers = () => {
           </thead>
           <tbody>
             {users &&
-              users.map((user) => (
-                <tr key={user._id}>
-                  <td>
-                    <div className="flex items-center space-x-3">
-                      <div>
-                        <div className="font-bold">{user?.email}</div>
+              users.map((user) =>
+                user?.role === "admin" ? (
+                  ""
+                ) : (
+                  <tr key={user._id}>
+                    <td>
+                      <div className="flex items-center space-x-3">
+                        <div>
+                          <div className="font-bold">{user?.email}</div>
+                        </div>
                       </div>
-                    </div>
-                  </td>
-                  <td>{user?.role}</td>
-                  <td>Active</td>
-                  <td>
-                    {user?.role === "Buyer" || user?.role === "admin" ? (
-                      ""
-                    ) : (
-                      <button
-                        onClick={() => handleVerifySeller(user?._id)}
-                        className="btn btn-success btn-xs"
-                      >
-                        {user?.status === "verified"
-                          ? user?.status
-                          : "un verified"}
-                      </button>
-                    )}
-                  </td>
-                  <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                    <span
-                      onClick={openModal}
-                      className="relative cursor-pointer inline-block px-3 py-1 font-semibold text-green-900 leading-tight"
-                    >
+                    </td>
+                    <td>{user?.role}</td>
+                    <td>Active</td>
+                    <td>
+                      {user?.role === "Buyer" || user?.role === "admin" ? (
+                        ""
+                      ) : (
+                        <button
+                          onClick={() => handleVerifySeller(user?._id)}
+                          className="btn btn-success btn-xs"
+                        >
+                          {user?.status === "verified"
+                            ? user?.status
+                            : "un verified"}
+                        </button>
+                      )}
+                    </td>
+                    <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                       <span
-                        aria-hidden="true"
-                        className="absolute inset-0 bg-accent opacity-50 rounded"
-                      ></span>
-                      <span className="relative">Delete</span>
-                    </span>
-                    <DeleteModal
-                      isOpen={isOpen}
-                      closeModal={closeModal}
-                      modalHandler={modalHandler}
-                      id={user._id}
-                    />
-                  </td>
-                </tr>
-              ))}
+                        onClick={openModal}
+                        className="relative cursor-pointer inline-block px-3 py-1 font-semibold text-green-900 leading-tight"
+                      >
+                        <span
+                          aria-hidden="true"
+                          className="absolute inset-0 bg-accent opacity-50 rounded"
+                        ></span>
+                        <span className="relative">Delete</span>
+                      </span>
+                      <DeleteModal
+                        isOpen={isOpen}
+                        closeModal={closeModal}
+                        modalHandler={modalHandler}
+                        id={user._id}
+                      />
+                    </td>
+                  </tr>
+                )
+              )}
           </tbody>
         </table>
       </div>

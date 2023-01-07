@@ -56,8 +56,7 @@ const AllCategoriesItem = () => {
   console.log(products);
   console.log(verified);
   return (
-    <div>
-      <h1>All Item</h1>
+    <div className="my-3">
       <div className="container mx-auto grid lg:grid lg:grid-cols-3 md:grid-cols-2 gap-4">
         {products.length > 0 ? (
           products.map((product) => (

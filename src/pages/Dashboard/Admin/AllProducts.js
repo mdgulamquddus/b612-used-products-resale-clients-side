@@ -39,7 +39,7 @@ const AllProducts = () => {
   if (isLoading) {
     <Spinner />;
   }
-  console.log(products[0].status);
+  // console.log(products[0].status);
   return (
     <div className="overflow-x-auto w-full">
       <table className="table w-full">

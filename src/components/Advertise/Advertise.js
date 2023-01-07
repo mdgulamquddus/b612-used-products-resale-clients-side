@@ -1,14 +1,18 @@
 import { useQuery } from "@tanstack/react-query";
 import React from "react";
+import Spinner from "../Spinner/Spinner";
 
 const Advertise = () => {
-  const { data: products = [] } = useQuery({
+  const { data: products = [], isLoading } = useQuery({
     queryKey: ["products"],
     queryFn: () =>
       fetch(`${process.env.REACT_APP_API_URL}/products/advertise`).then((res) =>
         res.json()
       ),
   });
+  if (isLoading) {
+    return <Spinner />;
+  }
   console.log(products);
   return (
     <>
@@ -24,17 +28,17 @@ const Advertise = () => {
                 className="card w-96 bg-base-100 shadow-xl"
               >
                 <figure>
-                  <img src="https://placeimg.com/400/225/arch" alt="Shoes" />
+                  <img src={product.image} alt="Shoes" />
                 </figure>
                 <div className="card-body">
                   <h2 className="card-title">
-                    Shoes!
+                    {product.model}
                     <div className="badge badge-secondary">NEW</div>
                   </h2>
-                  <p>If a dog chews shoes whose shoes does he choose?</p>
+                  <p>price : ${product.price}</p>
                   <div className="card-actions justify-end">
-                    <div className="badge badge-outline">Fashion</div>
-                    <div className="badge badge-outline">Products</div>
+                    <div className="badge badge-outline">Hot Deal</div>
+                    <div className="badge badge-outline">Good Product</div>
                   </div>
                 </div>
               </div>

@@ -72,7 +72,7 @@ const WishList = () => {
               <td>{product?.product?.seller?.email}</td>
               <th>
                 <Link
-                  to="/dashboard/checkout"
+                  to={`/dashboard/checkout/${product._id}`}
                   className="btn btn-success btn-xs"
                 >
                   Pay

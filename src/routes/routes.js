@@ -46,7 +46,11 @@ const router = createBrowserRouter([
       },
       {
         path: "/product-details/:id",
-        element: <ProductDetails></ProductDetails>,
+        element: (
+          <PrivateRoute>
+            <ProductDetails></ProductDetails>
+          </PrivateRoute>
+        ),
       },
 
       {
@@ -70,31 +74,59 @@ const router = createBrowserRouter([
       },
       {
         path: "all-users",
-        element: <AllUsers />,
+        element: (
+          <PrivateRoute>
+            <AllUsers />
+          </PrivateRoute>
+        ),
       },
       {
         path: "all-products",
-        element: <AllProducts />,
+        element: (
+          <PrivateRoute>
+            <AllProducts />
+          </PrivateRoute>
+        ),
       },
       {
         path: "all-report",
-        element: <AllReport />,
+        element: (
+          <PrivateRoute>
+            <AllReport />
+          </PrivateRoute>
+        ),
       },
       {
         path: "add-product",
-        element: <AddProduct />,
+        element: (
+          <PrivateRoute>
+            <AddProduct />
+          </PrivateRoute>
+        ),
       },
       {
         path: "buyer-all-product",
-        element: <BuyerAllProduct></BuyerAllProduct>,
+        element: (
+          <PrivateRoute>
+            <BuyerAllProduct></BuyerAllProduct>
+          </PrivateRoute>
+        ),
       },
       {
         path: "my-products",
-        element: <MyProducts />,
+        element: (
+          <PrivateRoute>
+            <MyProducts />
+          </PrivateRoute>
+        ),
       },
       {
         path: "checkout/:id",
-        element: <Checkout />,
+        element: (
+          <PrivateRoute>
+            <Checkout />
+          </PrivateRoute>
+        ),
       },
     ],
   },

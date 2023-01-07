@@ -4,7 +4,7 @@ export const addProduct = async (productData) => {
     method: "POST",
     headers: {
       "content-type": "application/json",
-      //   authorization: `Bearer ${localStorage.getItem("Ubuy-token")}`,
+      // authorization: `Bearer ${localStorage.getItem("Ubuy-token")}`,
     },
     body: JSON.stringify(productData),
   });
@@ -22,7 +22,7 @@ export const deleteProduct = async (id) => {
       method: "DELETE",
       headers: {
         "content-type": "application/json",
-        //   authorization: `Bearer ${localStorage.getItem("aircnc-token")}`,
+        // authorization: `Bearer ${localStorage.getItem("Ubuy-token")}`,
       },
     }
   );
@@ -38,7 +38,7 @@ export const addWishList = async (productData) => {
       method: "POST",
       headers: {
         "content-type": "application/json",
-        //   authorization: `Bearer ${localStorage.getItem("Ubuy-token")}`,
+        // authorization: `Bearer ${localStorage.getItem("Ubuy-token")}`,
       },
       body: JSON.stringify(productData),
     }
@@ -57,7 +57,7 @@ export const deleteWishList = async (id) => {
       method: "DELETE",
       headers: {
         "content-type": "application/json",
-        //   authorization: `Bearer ${localStorage.getItem("aircnc-token")}`,
+        // authorization: `Bearer ${localStorage.getItem("Ubuy-token")}`,
       },
     }
   );
@@ -73,7 +73,7 @@ export const bookingProduct = async (productData) => {
       method: "POST",
       headers: {
         "content-type": "application/json",
-        //   authorization: `Bearer ${localStorage.getItem("Ubuy-token")}`,
+        // authorization: `Bearer ${localStorage.getItem("Ubuy-token")}`,
       },
       body: JSON.stringify(productData),
     }
@@ -92,7 +92,7 @@ export const deleteBookProduct = async (id) => {
       method: "DELETE",
       headers: {
         "content-type": "application/json",
-        //   authorization: `Bearer ${localStorage.getItem("aircnc-token")}`,
+        // authorization: `Bearer ${localStorage.getItem("Ubuy-token")}`,
       },
     }
   );

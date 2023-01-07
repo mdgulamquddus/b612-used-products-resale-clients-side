@@ -6,7 +6,7 @@ export const getRole = async (email) => {
       method: "GET",
       headers: {
         "content-type": "application/json",
-        // authorization: `Bearer ${localStorage.getItem("Ubuy-token")}`,
+        authorization: `Bearer ${localStorage.getItem("Ubuy-token")}`,
       },
     }
   );
@@ -20,7 +20,7 @@ export const getAllUsers = async () => {
     method: "GET",
     headers: {
       "content-type": "application/json",
-      //   authorization: `Bearer ${localStorage.getItem("Ubuy-token")}`,
+      // authorization: `Bearer ${localStorage.getItem("Ubuy-token")}`,
     },
   });
   const users = await response.json();
@@ -34,7 +34,7 @@ export const deleteUser = async (id) => {
     method: "DELETE",
     headers: {
       "content-type": "application/json",
-      //   authorization: `Bearer ${localStorage.getItem("aircnc-token")}`,
+      // authorization: `Bearer ${localStorage.getItem("aircnc-token")}`,
     },
   });
   const result = await response.json();

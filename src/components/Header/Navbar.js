@@ -1,9 +1,14 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
+import { getRole } from "../../api/users";
 import { AuthContext } from "../../context/AuthProvider";
+import Spinner from "../Spinner/Spinner";
 
 const Navbar = () => {
   const { user, logout } = useContext(AuthContext);
+  const [role, setRole] = useState(null);
+  console.log(role);
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -11,17 +16,33 @@ const Navbar = () => {
       navigate("/");
     });
   };
+
+  useEffect(() => {
+    setLoading(true);
+    getRole(user?.email).then((data) => {
+      setRole(data);
+      setLoading(false);
+    });
+  }, [user]);
+  // if (loading) {
+  //   return <Spinner />;
+  // }
   const menuItems = (
     <>
       <NavLink className="btn btn-ghost" to="/">
         Home
       </NavLink>
-      <NavLink className="btn btn-ghost" to="/products">
-        Products
+      <NavLink className="btn btn-ghost" to="/blog">
+        Blog
       </NavLink>
-      <NavLink className="btn btn-ghost" to="/wishlist">
-        WishList
-      </NavLink>
+
+      {user && role === "Buyer" ? (
+        <NavLink className="btn btn-ghost" to="/wishlist">
+          WishList
+        </NavLink>
+      ) : (
+        ""
+      )}
 
       {user && user.uid ? (
         <>

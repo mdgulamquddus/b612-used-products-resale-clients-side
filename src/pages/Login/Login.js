@@ -33,7 +33,7 @@ const Login = () => {
       .then((result) => {
         toast.success("User Login Successfully");
         console.log(result.user);
-        setAuthToken(result.user);
+        setAuthToken(result.user, "Buyer");
         navigate(from, { replace: true });
       })
       .catch((err) => {

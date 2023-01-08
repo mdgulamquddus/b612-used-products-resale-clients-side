@@ -6,7 +6,7 @@ export const getRole = async (email) => {
       method: "GET",
       headers: {
         "content-type": "application/json",
-        authorization: `Bearer ${localStorage.getItem("Ubuy-token")}`,
+        // authorization: `Bearer ${localStorage.getItem("Ubuy-token")}`,
       },
     }
   );

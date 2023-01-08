@@ -1,12 +1,13 @@
 import { createBrowserRouter } from "react-router-dom";
+import Blog from "../components/Blog/Blog";
 import AllCategoriesItem from "../components/Category.js/AllCategoriesItem";
 import ProductDetails from "../components/Category.js/ProductDetails";
 import Welcome from "../components/Dashboard/Welcome";
 import Error from "../components/Error/Error";
 import DashboardLayout from "../layouts/DashboardLayout";
 import MainLayout from "../layouts/MainLayout";
+import AllBookings from "../pages/Dashboard/Admin/AllBookings";
 import AllProducts from "../pages/Dashboard/Admin/AllProducts";
-import AllReport from "../pages/Dashboard/Admin/AllReport";
 import AllUsers from "../pages/Dashboard/Admin/AllUsers";
 import BuyerAllProduct from "../pages/Dashboard/Buyer/BuyerAllProduct";
 import WishList from "../pages/Dashboard/Buyer/WishList";
@@ -43,6 +44,11 @@ const router = createBrowserRouter([
       {
         path: "/register",
         element: <Register></Register>,
+      },
+      {
+        path: "/blog",
+        element: <Blog></Blog>,
+        loader: async () => fetch("blogs.json"),
       },
       {
         path: "/product-details/:id",
@@ -89,10 +95,10 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "all-report",
+        path: "all-bookings",
         element: (
           <PrivateRoute>
-            <AllReport />
+            <AllBookings />
           </PrivateRoute>
         ),
       },

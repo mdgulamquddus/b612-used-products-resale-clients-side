@@ -83,6 +83,23 @@ export const bookingProduct = async (productData) => {
   return data;
 };
 
+// Delete a Product booking
+export const deleteBookingProduct = async (id) => {
+  console.log(id);
+  const response = await fetch(
+    `${process.env.REACT_APP_API_URL}/product/booking/${id}`,
+    {
+      method: "DELETE",
+      headers: {
+        "content-type": "application/json",
+        // authorization: `Bearer ${localStorage.getItem("Ubuy-token")}`,
+      },
+    }
+  );
+  const result = await response.json();
+  return result;
+};
+
 // Delete a Product in wish List
 export const deleteBookProduct = async (id) => {
   console.log(id);
